@@ -17,7 +17,8 @@ class ListLexer(lexer):
     COMMA = 3
     LBRACK = 4
     RBRACK = 5
-    TokenNames = [ "n/a", "<EOF>", "NAME", "COMMA", "LBRACK", "RBRACK"]
+    EQUALS = 6
+    TokenNames = [ "n/a", "<EOF>", "NAME", ",", "[", "]", "="]
     def get_token_name(self, token_type):
         return ListLexer.TokenNames[token_type]
     def __init__(self, input_str):
@@ -36,6 +37,9 @@ class ListLexer(lexer):
             elif self.cur_char == ']':
                 self.consume()
                 return Token(ListLexer.RBRACK, ']')
+            elif self.cur_char == '=':
+                self.consume()
+                return Token(ListLexer.EQUALS, '=')
             else:
                 if self.cur_char.isalpha():
                     return self.get_name()
@@ -61,13 +65,12 @@ class ListLexer(lexer):
 
     def ws(self):
         while(self.cur_char in [" \n\t\r"]):
-            self.consume()
+            self.advance()
 
 if __name__ == '__main__':
     print("this is the listLexer class def")
-    test_str = '[a,b,a,c]'
+    test_str = '[a,b,a,c]=ad'
     list_lexer = ListLexer(test_str)
     while list_lexer.cur_char != ListLexer.const_eof:
-        print("current curchar is : " + list_lexer.cur_char)
         t = list_lexer.next_token()
         print(t.to_string())
