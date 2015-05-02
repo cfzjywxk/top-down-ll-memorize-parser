@@ -1,5 +1,5 @@
 class lexer(object):
-    const_eof = '\0'
+    const_eof = ''
     const_eof_type = 1
     def __init__(self, input_str):
         self.input_str = input_str

@@ -10,9 +10,10 @@ class Token:
     def to_string(self):
         print(self.type)
         str_name = ListLexer.TokenNames[self.type]
-        return "<'" + str_name + "'," + str_name + ">"
+        return "type is " + "<"  + str_name + ">"
 
 class ListLexer(lexer):
+    ENDS = 1
     NAME = 2
     COMMA = 3
     LBRACK = 4
@@ -45,6 +46,7 @@ class ListLexer(lexer):
                     return self.get_name()
                 else:
                     raise Exception("invalid character: " + self.cur_char)
+        return Token(ListLexer.ENDS, '')
     def get_name(self):
         tmp_str = ""
         tmp_str += self.cur_char
